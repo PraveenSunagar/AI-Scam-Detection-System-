@@ -1,1 +1,1 @@
-AI-Scam-Detction
+AI-Scam-Detction System
