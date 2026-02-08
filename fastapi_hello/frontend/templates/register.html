@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Auth Form</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#f1f5f9;
+    font-family:Arial;
+}
+
+/* CARD */
+.auth-card{
+    width:350px;
+    background:#fff;
+    border-radius:14px;
+    padding:25px;
+    box-shadow:0 20px 40px rgba(0,0,0,.15);
+}
+
+/* TABS */
+.tabs{
+    display:flex;
+    margin-bottom:20px;
+}
+.tabs button{
+    flex:1;
+    padding:10px;
+    border:none;
+    background:#e5e7eb;
+    cursor:pointer;
+    font-weight:bold;
+}
+.tabs button.active{
+    background:#2563eb;
+    color:#fff;
+}
+
+/* FORM */
+form{
+    display:none;
+}
+form.active{
+    display:block;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin-bottom:12px;
+    border-radius:6px;
+    border:1px solid #cbd5e1;
+    font-size:14px;
+}
+
+.submit-btn{
+    width:100%;
+    padding:10px;
+    background:#2563eb;
+    border:none;
+    color:#fff;
+    border-radius:6px;
+    font-size:14px;
+    cursor:pointer;
+}
+
+/* GOOGLE */
+.google-btn{
+    margin-top:10px;
+    width:100%;
+    padding:10px;
+    border:1px solid #cbd5e1;
+    background:#fff;
+    cursor:pointer;
+    border-radius:6px;
+}
+
+/* LINKS */
+.extra{
+    text-align:center;
+    margin-top:10px;
+    font-size:13px;
+}
+.extra a{
+    color:#2563eb;
+    cursor:pointer;
+    text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="auth-card">
+
+    <!-- TABS -->
+    <div class="tabs">
+        <button class="active" onclick="showSignIn()">Sign In</button>
+        <button onclick="showSignUp()">Sign Up</button>
+    </div>
+
+    <!-- SIGN IN -->
+    <form id="signinForm" class="active">
+        <input type="email" placeholder="Email" required>
+        <input type="password" placeholder="Password" required>
+
+        <button class="submit-btn">Sign In</button>
+
+        <button type="button" class="google-btn">
+            Continue with Google
+        </button>
+
+        <div class="extra">
+            <a onclick="forgotPassword()">Forgot Password?</a>
+        </div>
+    </form>
+
+    <!-- SIGN UP -->
+    <form id="signupForm">
+        <input type="text" placeholder="Full Name" required>
+        <input type="email" placeholder="Email" required>
+        <input type="password" placeholder="Password" required>
+
+        <button class="submit-btn">Create Account</button>
+
+        <button type="button" class="google-btn">
+            Sign up with Google
+        </button>
+    </form>
+
+</div>
+
+<script>
+function showSignIn(){
+    document.getElementById("signinForm").classList.add("active");
+    document.getElementById("signupForm").classList.remove("active");
+    document.querySelectorAll(".tabs button")[0].classList.add("active");
+    document.querySelectorAll(".tabs button")[1].classList.remove("active");
+}
+
+function showSignUp(){
+    document.getElementById("signupForm").classList.add("active");
+    document.getElementById("signinForm").classList.remove("active");
+    document.querySelectorAll(".tabs button")[1].classList.add("active");
+    document.querySelectorAll(".tabs button")[0].classList.remove("active");
+}
+
+function forgotPassword(){
+    alert("Forgot password flow here");
+}
+
+async function scanMessage() {
+    const text = document.querySelector("textarea").value;
+
+    if (text.trim() === "") {
+        alert("Please enter a message");
+        return;
+    }
+
+    const response = await fetch("/scan", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: text })
+    });
+
+    const data = await response.json();
+
+    alert(
+        "Result: " + data.result +
+        "\nScore: " + data.score + "%" +
+        "\nReasons: " + data.reasons.join(", ")
+    );
+}
+</script>
+
+</body>
+</html>
+
