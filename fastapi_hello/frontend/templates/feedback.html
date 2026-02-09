@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>User Feedback</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body{
+    background:#f3f4f6;
+    font-family: Arial, Helvetica, sans-serif;
+    padding:20px;
+}
+
+.feedback-box{
+    max-width:600px;
+    margin:auto;
+    background:#fff;
+    padding:20px;
+    border-radius:12px;
+    border:1px solid #d1d5db;
+}
+
+.feedback-box h2{
+    margin-bottom:15px;
+}
+
+textarea{
+    width:90%;
+    height:80px;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #d1d5db;
+    resize:none;
+}
+
+.send-btn{
+    margin-top:10px;
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    padding:10px 16px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.feedback-list{
+    margin-top:25px;
+}
+
+.feedback-item{
+    display:flex;
+    gap:12px;
+    padding:12px;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.profile{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#d1d5db;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+}
+
+.username{
+    font-weight:bold;
+    font-size:14px;
+}
+
+.message{
+    font-size:13px;
+    color:#374151;
+}
+</style>
+</head>
+
+<body>
+
+<div class="feedback-box">
+    <h2>Feedback</h2>
+
+    <!-- ADD FEEDBACK -->
+    <textarea id="feedbackInput" placeholder="Your feedback..."></textarea>
+    <button class="send-btn" onclick="addFeedback()">
+        <i class="fa-solid fa-paper-plane"></i> Send
+    </button>
+
+    <!-- FEEDBACK SHOW -->
+    <div class="feedback-list" id="feedbackList">
+
+        <div class="feedback-item">
+            <div class="profile">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <div>
+                <div class="username">Username</div>
+                <div class="message">Good app, very helpful 👍</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+function addFeedback(){
+    const text = document.getElementById("feedbackInput").value;
+    if(text.trim() === "") return;
+
+    const list = document.getElementById("feedbackList");
+
+    const item = document.createElement("div");
+    item.className = "feedback-item";
+
+    item.innerHTML = `
+        <div class="profile">
+            <i class="fa-solid fa-user"></i>
+        </div>
+        <div>
+            <div class="username">Username</div>
+            <div class="message">${text}</div>
+        </div>
+    `;
+
+    list.prepend(item);
+    document.getElementById("feedbackInput").value = "";
+}
+</script>
+
+</body>
+</html>
