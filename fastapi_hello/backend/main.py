@@ -18,3 +18,7 @@ def home(request: Request):
 @app.get("/register")
 def register_page(request: Request):
     return templates.TemplateResponse("register.html", {"request": request})
+
+@app.get("/feedback")
+def feedback_page(request: Request):
+    return templates.TemplateResponse("feedback.html", {"request": request})
