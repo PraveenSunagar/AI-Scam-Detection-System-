@@ -15,6 +15,17 @@ body{
     background:#f1f5f9;
     font-family:Arial;
 }
+.close-btn{
+  position:absolute;
+  top:8px;
+  right:12px;
+  font-size:22px;
+  cursor:pointer;
+  color:#555;
+}
+.close-btn:hover{
+  color:red;
+}
 
 /* CARD */
 .auth-card{
@@ -95,10 +106,16 @@ input{
 }
 </style>
 </head>
-
+ 
 <body>
 
 <div class="auth-card">
+<form id="forgotForm" style="position:relative;">
+  <input type="email" placeholder="Email" required>
+  <input type="password" placeholder="New Password" required>
+  <input type="password" placeholder="Confirm Password" required>
+  <button class="submit-btn">Reset Password</button>
+</form>
 
     <!-- TABS -->
     <div class="tabs">
@@ -119,6 +136,7 @@ input{
 
         <div class="extra">
             <a onclick="forgotPassword()">Forgot Password?</a>
+        
         </div>
     </form>
 
@@ -130,7 +148,7 @@ input{
 
         <button class="submit-btn">Create Account</button>
 
-        <button type="button" class="google-btn">
+        <button type="button" class="google-btn" onclick="googleLogin()">
             Sign up with Google
         </button>
     </form>
@@ -138,6 +156,9 @@ input{
 </div>
 
 <script>
+function googleLogin(){
+  window.location.href = "http://127.0.0.1:8000/google-login";
+}
 function showSignIn(){
     document.getElementById("signinForm").classList.add("active");
     document.getElementById("signupForm").classList.remove("active");
@@ -150,10 +171,6 @@ function showSignUp(){
     document.getElementById("signinForm").classList.remove("active");
     document.querySelectorAll(".tabs button")[1].classList.add("active");
     document.querySelectorAll(".tabs button")[0].classList.remove("active");
-}
-
-function forgotPassword(){
-    alert("Forgot password flow here");
 }
 
 async function scanMessage() {
@@ -180,8 +197,106 @@ async function scanMessage() {
         "\nReasons: " + data.reasons.join(", ")
     );
 }
+
+document.getElementById("signupForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const inputs = e.target.querySelectorAll("input");
+    const formData = new FormData();
+
+    formData.append("username", inputs[0].value);
+    formData.append("email", inputs[1].value);
+    formData.append("password", inputs[2].value);
+
+    const res = await fetch("http://127.0.0.1:8000/register", {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await res.json();
+    if(data.message){
+      alert(data.message);
+    window.location.href = "index.html"; // 👈 auto close register.html
+    }   
+else{
+  alert(data.error);
+}
+
+});
+
+document.getElementById("signinForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const inputs = e.target.querySelectorAll("input");
+    const formData = new FormData();
+
+    formData.append("email", inputs[0].value);
+    formData.append("password", inputs[1].value);
+
+    const res = await fetch("http://127.0.0.1:8000/login", {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await res.json();
+
+    if (data.message === "Login success") {
+        localStorage.setItem("isLoggedIn", "true");
+        alert("Login success");
+        window.location.href = "index.html";
+    } else {
+        alert(data.error || "Login failed");
+    }
+});
+function forgotPassword(){
+  document.querySelector(".tabs").style.display = "none";
+  document.getElementById("signinForm").style.display = "none";
+  document.getElementById("signupForm").style.display = "none";
+  document.getElementById("forgotForm").style.display = "block";
+}
+
+
+
+document.getElementById("forgotForm").addEventListener("submit", async (e)=>{
+  e.preventDefault();
+
+  const inputs = e.target.querySelectorAll("input");
+  const email = inputs[0].value;
+  const newPass = inputs[1].value;
+  const confirmPass = inputs[2].value;
+
+  if(newPass !== confirmPass){
+    alert("Password not match");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("email", email);
+  formData.append("new_password", newPass);
+
+  const res = await fetch("http://127.0.0.1:8000/reset-password", {
+    method: "POST",
+    body: formData
+  });
+
+  const data = await res.json();
+  if(data.message){
+  alert(data.message);
+  window.location.href = "index.html"; // 👈 reset aad mele close
+}else{
+  alert(data.error);
+}
+});
+function backToLogin(){
+  document.querySelector(".tabs").style.display = "flex";
+  document.getElementById("forgotForm").style.display = "none";
+  document.getElementById("signinForm").style.display = "block";
+}
+
 </script>
 
 </body>
 </html>
+
+
 
