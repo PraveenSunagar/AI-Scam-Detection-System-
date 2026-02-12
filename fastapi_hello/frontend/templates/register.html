@@ -282,7 +282,7 @@ document.getElementById("forgotForm").addEventListener("submit", async (e)=>{
   const data = await res.json();
   if(data.message){
   alert(data.message);
-  window.location.href = "index.html"; // 👈 reset aad mele close
+  window.location.href = "index.html"; 
 }else{
   alert(data.error);
 }
@@ -297,6 +297,7 @@ function backToLogin(){
 
 </body>
 </html>
+
 
 
 
