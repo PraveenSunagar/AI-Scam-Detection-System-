@@ -4,7 +4,6 @@ from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
-# ✅ Correct way
 app.mount("/static", StaticFiles(directory="frontend/static"), name="static")
 
 templates = Jinja2Templates(directory="frontend/templates")
@@ -22,3 +21,4 @@ def register_page(request: Request):
 @app.get("/feedback")
 def feedback_page(request: Request):
     return templates.TemplateResponse("feedback.html", {"request": request})
+
