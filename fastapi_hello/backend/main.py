@@ -8,7 +8,7 @@ app.mount("/static", StaticFiles(directory="frontend/static"), name="static")
 
 templates = Jinja2Templates(directory="frontend/templates")
 
-# Home page
+
 @app.get("/")
 def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
@@ -21,4 +21,5 @@ def register_page(request: Request):
 @app.get("/feedback")
 def feedback_page(request: Request):
     return templates.TemplateResponse("feedback.html", {"request": request})
+
 
