@@ -1,1 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Scam Detection System</title>
+
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+/* AUTH MODAL */
+.auth-modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:2000;
+}
+
+.auth-box{
+    width:380px;
+    height:520px;
+    background:#fff;
+    border-radius:14px;
+    overflow:hidden;
+    position:relative;
+}
+
+.auth-box iframe{
+    width:100%;
+    height:100%;
+    border:none;
+}
+
+.close-btn{
+    position:absolute;
+    top:10px;
+    right:14px;
+    cursor:pointer;
+    font-size:18px;
+}
+
+
+
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.nav-menu a.active {
+    background-color: #2563eb;
+    color: #fff;
+}
+
+body {
+    background-color: #ffffff;
+    color: #000000;
+}
+/* ===== FOOTER ===== */
+.footer {
+    margin-left: 260px; /* align with sidebar */
+    background-color: #f3f4f6;
+    border-top: 1px solid #d1d5db;
+    padding: 30px 20px;
+    margin-top: 40px;
+    color: #000;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 220px;
+}
+
+.footer-section h4 {
+    font-size: 15px;
+    margin-bottom: 12px;
+}
+
+.footer-section p,
+.footer-section a {
+    font-size: 13px;
+    color: #4b5563;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.footer-section a:hover {
+    color: #2563eb;
+}
+
+.footer-bottom {
+    text-align: center;
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 20px;
+}
+   .nav-menu a {
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: all 0.25s ease;
+}
+
+.nav-menu a:hover {
+    background-color: #b5c1dc;
+    color: #ffffff;
+}
+
+
+/* ===== FOOTER RESPONSIVE ===== */
+@media (max-width: 900px) {
+    .footer {
+        margin-left: 0;
+    }
+}
+
+.scam-stats-card {
+    margin-left: 260px;     /* same as sidebar width */
+    margin-right: 20px;
+    margin-bottom: 40px;
+}
+
+/* Center and limit width like content */
+.scam-stats-card {
+    max-width: calc(100% - 300px);
+}
+
+/* 🔧 MOBILE FIX */
+@media (max-width: 900px) {
+    .scam-stats-card {
+        margin-left: 0;
+        margin-right: 0;
+        max-width: 100%;
+    }
+}
+/* ===== SCAM STATS CARD ===== */
+.scam-stats-card h3 {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.scam-stats-content {
+    display: flex;
+    gap: 20px;
+}
+
+.scam-stats-left {
+    flex: 1.3;
+}
+
+.scam-stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.scam-stat:last-child {
+    border-bottom: none;
+}
+
+.scam-stat-value {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.scam-stat-label {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.scam-stat-right {
+    font-size: 13px;
+    font-weight: bold;
+    color: #2563eb;
+}
+
+.scam-stat-up {
+    color: #22c55e;
+}
+
+/* Donut Chart */
+.scam-donut {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: conic-gradient(
+        #22c55e 0deg 220deg,
+        #ef4444 220deg 310deg,
+        #facc15 310deg 360deg
+    );
+    position: relative;
+    margin: auto;
+}
+
+.scam-donut::after {
+    content: '';
+    position: absolute;
+    inset: 35px;
+    background: #ffffff;
+    border-radius: 50%;
+}
+
+.scam-donut-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Legend */
+.scam-legend {
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+.scam-legend div {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+
+.scam-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.dot-red { background: #ef4444; }
+.dot-yellow { background: #facc15; }
+.dot-green { background: #22c55e; }
+
+/* Responsive */
+@media(max-width:800px){
+    .scam-stats-content{
+        flex-direction: column;
+    }
+}
+
+/* ===== HEADER ===== */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+}
+
+.logo i {
+    font-size: 22px;
+    color: #2563eb;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
+    padding-bottom: 5px;
+}
+
+.nav-menu a.active {
+    border-bottom: 2px solid #2563eb;
+    color: #000;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #d1d5db;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #000;
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #000;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 260px;
+    height: calc(100vh - 60px);
+    background-color: #f3f4f6;
+    padding: 20px;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+    z-index: 1001;
+}
+
+.sidebar-close {
+    display: none; /* mobile only */
+    justify-content: flex-end;
+    cursor: pointer;
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.open-sidebar {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 70px;
+    background-color: #2563eb;
+    padding: 8px 12px;
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+    z-index: 1002;
+    color: #fff;
+}
+
+.sidebar ul { list-style: none; padding: 0; }
+.sidebar li { padding: 12px 15px; display: flex; align-items: center; gap: 12px; color: #000; cursor: pointer; border-radius: 6px; margin-bottom: 5px; font-size: 14px; }
+.sidebar li.active { background-color: #2563eb; color: #fff; }
+.sidebar li:hover { background-color: #e5e7eb; }
+
+.stats-box { margin-top: 25px; background-color: #ffffff; border-top: 1px solid #d1d5db; padding-top: 20px;     border-radius: 4px;
+    text-align: center; }
+.stats-title { font-size: 13px; color: #6b7280; margin-bottom: 10px; }
+.stat { margin-bottom: 12px; }
+.stat h3 { font-size: 20px; color: #000; }
+.stat span { font-size: 12px; color: #22c55e; }
+.stat.red span { color: #ef4444; }
+
+/* ===== MAIN CONTENT & RIGHT ANALYSIS ===== */
+.content-wrapper {
+    display: flex;
+    gap: 20px;
+    margin-left: 260px;
+    margin-top: 60px;
+    padding: 20px;
+}
+
+/* Main content area */
+.main-content {
+    flex: 2;
+}
+
+/* Right analysis boxes */
+.right-analysis {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Common Box */
+.analysis-box {
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    padding: 20px;
+    color: #000;
+}
+
+/* Header */
+.analysis-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.analysis-header h3 {
+    flex: 1;
+    font-size: 16px;
+    color: #000;
+}
+
+.analysis-header span {
+    background-color: #ef4444;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.analysis-header.danger i {
+    color: #ef4444;
+}
+
+.analysis-header i {
+    color: #2563eb;
+    font-size: 18px;
+}
+
+/* Description */
+.analysis-desc {
+    font-size: 14px;
+    color: #374151;
+    margin-bottom: 10px;
+}
+
+/* List */
+.analysis-list {
+    margin-left: 18px;
+    font-size: 13px;
+    color: #4b5563;
+}
+
+/* Table */
+.recent-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.recent-table th,
+.recent-table td {
+    padding: 8px;
+    border-bottom: 1px solid #d1d5db;
+}
+
+.recent-table .scam {
+    color: #ef4444;
+    font-weight: bold;
+}
+
+.recent-table .safe {
+    color: #22c55e;
+    font-weight: bold;
+}
+
+.recent-table .suspicious {
+    color: #facc15;
+    font-weight: bold;
+}
+
+/* ===== SCAN MESSAGE UI ===== */
+.scan-container {
+    max-width: 100%;
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #d1d5db;
+    color: #000;
+}
+
+.scan-container h2 {
+    font-size: 22px;
+    margin-bottom: 6px;
+    color: #000;
+}
+
+.scan-container p {
+    font-size: 14px;
+    color: #4b5563;
+    margin-bottom: 20px;
+}
+
+.scan-box {
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #ffffff;
+}
+
+.scan-box textarea {
+    width: 100%;
+    height: 120px;
+    background: transparent;
+    border: 1px solid #d1d5db;
+    outline: none;
+    resize: none;
+    font-size: 14px;
+    color: #000;
+}
+
+.file-upload {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed #d1d5db;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.browse-btn {
+    background-color: #e5e7eb;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #000;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.browse-btn:hover {
+    background-color: #d1d5db;
+}
+
+.scan-btn {
+    margin-top: 18px;
+    background: #2563eb;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.scan-result {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 900px) {
+    .nav-menu {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        flex-direction: column;
+        gap: 0;
+        display: none;
+        z-index: 1002;
+        color: #000;
+    }
+
+    .nav-menu.show {
+        display: flex;
+    }
+
+    .nav-menu a {
+        padding: 15px;
+        border-bottom: 1px solid #d1d5db;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .sidebar {
+        width: 220px;
+        transform: translateX(-100%);
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+    .sidebar-close {
+        display: flex;
+    }
+
+    .open-sidebar {
+        display: block;
+    }
+
+    .content-wrapper {
+        flex-direction: column;
+        margin-left: 0;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .scan-result {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .file-upload {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+}
+</style>
+</head>
+<body>```
+
+<!-- ===== HEADER ===== -->
+<header>
+    <div class="logo">
+        <i class="fa-solid fa-shield-halved"></i>
+        AI Scam Detection System
+    </div>
+
+
+
+    <div class="header-right">
+       <div class="profile-icon" id="profileIcon" onclick="handleProfileClick()">
+    <i class="fa-solid fa-user"></i>
+</div>
+
+<div id="profileDropdown" style="
+    display:none;
+    position:absolute;
+    top:60px;
+    right:20px;
+    background:#fff;
+    border:1px solid #ccc;
+    border-radius:8px;
+    padding:10px;
+    width:150px;
+">
+    <p id="profileName" style="margin-bottom:8px; font-weight:bold;"></p>
+    <button onclick="logout()" style="
+        width:100%;
+        padding:6px;
+        background:#ef4444;
+        color:white;
+        border:none;
+        border-radius:5px;
+        cursor:pointer;
+    ">Logout</button>
+</div>
+
+    </div>
+</header>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-close" onclick="closeSidebar()">
+        <i class="fa-solid fa-xmark"></i>
+    </div>
+
+    <ul>
+        <li><i class="fa-solid fa-home"></i> home</li>
+        <li><i class="fa-solid fa-images"></i> Images</li>
+        <li><i class="fa-solid fa-link"></i> URL Check</li>
+        <li onclick="openFeedback()"><i class="fa-solid fa-comment-dots"></i> Feedback</li>
+        <li><i class="fa-solid fa-message"></i> New </li>
+    </ul>
+
+    <div class="stats-box">
+        <div class="stats-title">Today’s Scans</div>
+        <hr>
+        <div class="stat"><h3>91</h3><span>↑ 12% from yesterday</span></div>
+        <div class="stat"><h3>3</h3><span>↑ Scams detected</span></div>
+        <div class="stat red"><h3>30.5%</h3><span>↑ Scam rate</span></div>
+    </div>
+
+    <div class="stats-box">
+        <div class="stats-title">Total Scans</div>
+        <hr>
+        <div class="stat"><h3>8,352</h3><span>↑ Total scans</span></div>
+        <div class="stat"><h3>1,087</h3><span>↑ Total scams</span></div>
+    </div>
+</aside>
+
+<div class="open-sidebar" onclick="openSidebar()">
+    <i class="fa-solid fa-arrow-right"></i>
+</div>
+
+<!-- ===== CONTENT WRAPPER ===== -->
+<div class="content-wrapper">
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="main-content">
+        <div class="scan-container">
+            <h2 style="color: rgb(73, 73, 245)">Check for Scam Messages</h2>
+            <p>Paste or upload a suspicious message to analyze for scams or fraud.</p>
+
+            <div class="scan-box">
+                <textarea placeholder="What You Want to analyze "></textarea>
+
+                <div class="file-upload">
+                    <span></span>
+
+                    <label class="browse-btn">
+                        <input type="file" hidden>
+                        <i class="fa-solid fa-folder-open"></i>
+                        Browse File
+                    </label>
+                </div>
+            </div>
+ 
+ <center>         <button class="scan-btn" id="scanBtn" onclick="checkLoginAndScan()"> 
+                <i class="fa-solid fa-shield-halved"></i>
+                Scan Message
+            </button>
+</center>
+        </div>
+    </div>
+
+    <!-- ===== RIGHT SIDE ANALYSIS BOXES ===== -->
+    <div class="right-analysis">
+
+        <!-- 1️⃣ Scam Detection Result -->
+        <div class="analysis-box">
+            <div class="analysis-header danger">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <h3>Scam Detected </h3>
+                
+                <span>89%</span>
+            </div>
+            <hr>
+
+            <p class="analysis-desc">
+                This message has a <strong>high probability</strong> of being a scam.
+            </p>
+
+            <ul class="analysis-list">
+               <b> <li>Suspicious URL in text</li></b>
+            <b> <li>Urgency to click link</li></b>
+               <b> <li>Unusual sender address</li></b>
+                
+            </ul>
+        </div>
+
+        <!-- 2️⃣ Recent Scams -->
+        <div class="analysis-box">
+            <div class="analysis-header">
+                <h3>Recent Scans</h3>
+            </div>
+            <hr>
+
+            <table class="recent-table">
+                <tr>
+                    <td>Bank Alert-Scam</td>
+                    <td class="scam">Scam</td>
+                    <td>92%</td>
+                </tr>
+                <tr>
+                    <td>Job Offer</td>
+                    <td class="safe">Safe</td>
+                    <td>8%</td>
+                </tr>
+                <tr>
+                    <td>OTP Warning</td>
+                    <td class="suspicious">Suspicious</td>
+                    <td>54%</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+    
+</div>
+
+<!-- 📊 Scam Detection Stats -->
+<div class="analysis-box scam-stats-card">
+
+    <h3>Scam Detection Stats</h3>
+
+    <div class="scam-stats-content">
+
+        <!-- LEFT TEXT -->
+        <div class="scam-stats-left">
+
+            <div class="scam-stat">
+                <div>
+                    <div class="scam-stat-value">8,352</div>
+                    <div class="scam-stat-label">Scans Today</div>
+                </div>
+                <div class="scam-stat-right">23%</div>
+            </div>
+
+            <div class="scam-stat">
+                <div>
+                    <div class="scam-stat-value">2,549</div>
+                    <div class="scam-stat-label">Scams Detected</div>
+                </div>
+                <div class="scam-stat-right">59%</div>
+            </div>
+
+            <div class="scam-stat">
+                <div>
+                    <div class="scam-stat-value">30.5%</div>
+                    <div class="scam-stat-label">Scam Rate</div>
+                </div>
+                <div class="scam-stat-up">▲ 3.5%</div>
+            </div>
+
+            <div class="scam-stat">
+                <div>
+                    <div class="scam-stat-value">1,087</div>
+                    <div class="scam-stat-label">Feedback</div>
+                </div>
+                <div class="scam-stat-up">▲ 481</div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT GRAPH -->
+        <div>
+            <div class="scam-donut">
+                <div class="scam-donut-text">21,948</div>
+            </div>
+
+            <div class="scam-legend">
+                <div><span class="scam-dot dot-red"></span> Scam: 8,943</div>
+                <div><span class="scam-dot dot-yellow"></span> Review: 3,301</div>
+                <div><span class="scam-dot dot-green"></span> Safe: 21,948</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+
+    <div class="footer-content">
+
+        <!-- About -->
+        <div class="footer-section">
+            <h4>AI Scam Detection System</h4>
+            <p>
+                An intelligent system designed to detect scam messages,
+                phishing links, and fraudulent content using AI & ML models.
+            </p>
+        </div>
+
+        <!-- Features -->
+        <div class="footer-section">
+            <h4>Key Features</h4>
+            <a href="#">Scam Message Detection</a>
+            <a href="#">URL Phishing Analysis</a>
+            <a href="#">Real-time Risk Score</a>
+            <a href="#">History & Reports</a>
+        </div>
+
+
+        <!-- Contact -->
+        <div class="footer-section">
+            <h4>Support</h4>
+            <a href="#">Help Center</a>
+            <a href="#">Feedback</a>
+            <a href="#">Report Scam</a>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 AI Scam Detection System | Powered by Artificial Intelligence
+    </div>
+
+</footer>
+<!-- AUTH MODAL -->
+<div id="authModal" class="auth-modal">
+    <div class="auth-box">
+        <span class="close-btn" onclick="closeAuth()">✖</span>
+        <iframe src="/register"></iframe>
+    </div>
+</div>
+<!-- FEEDBACK MODAL -->
+ <div id="authPopup" class="popup"></div>
+<div id="feedbackModal" class="auth-modal">
+    <div class="auth-box" style="width:600px; height:500px;">
+        <span class="close-btn" onclick="closeFeedback()">✖</span>
+        <iframe id="feedbackFrame" src=""></iframe>
+    </div>
+</div>
+</div>
+
+
+
+<script>
+function toggleMenu() {
+    document.querySelector(".nav-menu").classList.toggle("show");
+}
+
+function openSidebar() {
+    document.getElementById("sidebar").classList.add("show");
+}
+
+function closeSidebar() {
+    document.getElementById("sidebar").classList.remove("show");
+}
+document.addEventListener("click", function (event) {
+    const menu = document.querySelector(".nav-menu");
+    const toggleBtn = document.querySelector(".menu-toggle");
+
+    if (!menu.contains(event.target) && !toggleBtn.contains(event.target)) {
+        menu.classList.remove("show");
+    }
+});
+function openAuth(){
+    document.getElementById("authModal").style.display = "flex";
+}
+
+function closeAuth(){
+    document.getElementById("authModal").style.display = "none";
+}
+function openFeedback(){
+    document.getElementById("feedbackFrame").src = "/feedback";
+    document.getElementById("feedbackModal").style.display = "flex";
+}
+
+function closeFeedback(){
+    document.getElementById("feedbackModal").style.display = "none";
+    document.getElementById("feedbackFrame").src = "";
+}
+function checkLoginAndScan(){
+    if(localStorage.getItem("isLoggedIn") === "true"){
+        scanMessage(); // already login → scan allow
+    }else{
+        openAuth(); // not login → open login/register modal
+    }
+}
+function closePopup(){
+    document.getElementById("authPopup").style.display = "none";
+}
+window.onload = function(){
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const username = localStorage.getItem("username");
+
+    if(isLoggedIn === "true" && username){
+        document.getElementById("profileIcon").innerHTML =
+            username[0].toUpperCase();
+    }
+};
+
+function loginSuccess(username){
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("username", username);
+
+    document.getElementById("profileIcon").innerHTML =
+        username[0].toUpperCase();
+
+    closeAuth();
+}
+
+function handleProfileClick(){
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+    if(isLoggedIn === "true"){
+        const dropdown = document.getElementById("profileDropdown");
+        const username = localStorage.getItem("username");
+
+        document.getElementById("profileName").innerText = username;
+        dropdown.style.display =
+            dropdown.style.display === "block" ? "none" : "block";
+    }else{
+        openAuth();
+    }
+}
+
+function logout(){
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("username");
+
+    document.getElementById("profileIcon").innerHTML =
+        '<i class="fa-solid fa-user"></i>';
+
+    document.getElementById("profileDropdown").style.display = "none";
+}
+function scanMessage(){
+    alert("Scanning started...");
+}
+
+</script>
+
+</body>
+</html>
 
