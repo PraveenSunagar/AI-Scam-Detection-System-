@@ -1,9 +1,6 @@
 **AI-Scam-Detction System**
 # 🛡️ AI Scam Detection System
 
-
----
-
 ## 📌 Overview
 
 The AI Scam Detection System is designed to detect fraudulent or phishing messages in real-time.  
