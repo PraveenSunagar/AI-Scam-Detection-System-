@@ -1,7 +1,6 @@
 **AI-Scam-Detction System**
 # 🛡️ AI Scam Detection System
 
-> An AI-powered scam detection system that classifies messages as **Scam** or **Legitimate** using Machine Learning and Natural Language Processing (NLP).
 
 ---
 
