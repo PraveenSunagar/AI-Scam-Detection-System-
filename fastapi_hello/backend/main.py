@@ -43,6 +43,7 @@ def login(
         "message": "Login success",
         "username": user["username"]   # 🔥 important for frontend
     }
+
 # ---------------- HOME PAGE ----------------
 @app.get("/")
 def home(request: Request):
