@@ -43,6 +43,40 @@ def login(
         "message": "Login success",
         "username": user["username"]   # 🔥 important for frontend
     }
+# ---------------- HOME PAGE ----------------
+@app.get("/")
+def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+# ---------------- REGISTER PAGE ----------------
+@app.get("/register")
+def register_page(request: Request):
+    return templates.TemplateResponse("register.html", {"request": request})
+
+# ---------------- FEEDBACK PAGE ----------------
+@app.get("/feedback")
+def feedback_page(request: Request):
+    return templates.TemplateResponse("feedback.html", {"request": request})
+
+# ---------------- RESET PASSWORD ----------------
+@app.post("/reset-password")
+def reset_password(
+    email: str = Form(...),
+    new_password: str = Form(...)
+):
+    user = users.find_one({"email": email})
+    if not user:
+        return {"error": "Email not found"}
+
+    hashed = pwd.hash(new_password)
+
+    users.update_one(
+        {"email": email},
+        {"$set": {"password": hashed}}
+    )
+
+    return {"message": "Password reset success"}
+
 
 
 
