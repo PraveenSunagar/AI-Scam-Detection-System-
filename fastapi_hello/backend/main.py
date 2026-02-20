@@ -13,7 +13,7 @@ templates = Jinja2Templates(directory="frontend/templates")
 def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-# Register page
+
 @app.get("/register")
 def register_page(request: Request):
     return templates.TemplateResponse("register.html", {"request": request})
@@ -21,5 +21,6 @@ def register_page(request: Request):
 @app.get("/feedback")
 def feedback_page(request: Request):
     return templates.TemplateResponse("feedback.html", {"request": request})
+
 
 
