@@ -1,6 +1,9 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from backend.services.auth_service import register_user, login_user
+from pymongo import MongoClient
+from passlib.context import CryptContext
 
 app = FastAPI()
 
@@ -21,6 +24,7 @@ def register_page(request: Request):
 @app.get("/feedback")
 def feedback_page(request: Request):
     return templates.TemplateResponse("feedback.html", {"request": request})
+
 
 
 
