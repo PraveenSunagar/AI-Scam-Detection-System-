@@ -18,6 +18,32 @@ client = MongoClient("mongodb://127.0.0.1:27017")
 db = client["scam_app"]
 users = db["users"]
 
+# ---------------- REGISTER ----------------
+@app.post("/register")
+def register(
+    username: str = Form(...),
+    email: str = Form(...),
+    password: str = Form(...)
+):
+    if not register_user(username, email, password):
+        return {"error": "User already exists"}
+    return {"message": "Register success"}
+
+# ---------------- LOGIN ----------------
+@app.post("/login")
+def login(
+    email: str = Form(...),
+    password: str = Form(...)
+):
+    user = login_user(email, password)
+    if not user:
+        return {"error": "Invalid login"}
+
+    return {
+        "message": "Login success",
+        "username": user["username"]   # 🔥 important for frontend
+    }
+
 
 
 
