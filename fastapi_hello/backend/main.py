@@ -7,7 +7,7 @@ from passlib.context import CryptContext
 
 app = FastAPI()
 
-# Static folder
+
 app.mount("/static", StaticFiles(directory="frontend/static"), name="static")
 
 templates = Jinja2Templates(directory="frontend/templates")
@@ -77,6 +77,7 @@ def reset_password(
     )
 
     return {"message": "Password reset success"}
+
 
 
 
