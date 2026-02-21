@@ -18,7 +18,6 @@ client = MongoClient("mongodb://127.0.0.1:27017")
 db = client["scam_app"]
 users = db["users"]
 
-# ---------------- REGISTER ----------------
 @app.post("/register")
 def register(
     username: str = Form(...),
@@ -77,6 +76,7 @@ def reset_password(
     )
 
     return {"message": "Password reset success"}
+
 
 
 
