@@ -44,7 +44,6 @@ This system can be integrated into:
 - **FastAPI / Flask**
 - **HTML, CSS, JavaScript**
 
----
-
+--
 ## 📂 Project Structure
 
