@@ -13,7 +13,7 @@ app.mount("/static", StaticFiles(directory="frontend/static"), name="static")
 templates = Jinja2Templates(directory="frontend/templates")
 pwd = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-# MongoDB connection
+
 client = MongoClient("mongodb://127.0.0.1:27017")
 db = client["scam_app"]
 users = db["users"]
@@ -76,6 +76,7 @@ def reset_password(
     )
 
     return {"message": "Password reset success"}
+
 
 
 
