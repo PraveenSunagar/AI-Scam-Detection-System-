@@ -28,7 +28,6 @@ def register(
         return {"error": "User already exists"}
     return {"message": "Register success"}
 
-# ---------------- LOGIN ----------------
 @app.post("/login")
 def login(
     email: str = Form(...),
@@ -76,6 +75,7 @@ def reset_password(
     )
 
     return {"message": "Password reset success"}
+
 
 
 
