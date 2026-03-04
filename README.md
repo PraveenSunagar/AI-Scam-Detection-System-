@@ -37,7 +37,7 @@ This system can be integrated into:
 
 ## 🛠️ Tech Stack
 
-- **Python**
+- **Python-(DEEP)**
 - **Scikit-learn**
 - **Pandas**
 - **NumPy**
