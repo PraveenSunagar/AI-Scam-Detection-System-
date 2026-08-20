@@ -1,0 +1,92 @@
+[
+  {
+    "id": "bank_kyc_phish",
+    "title": "SBI Bank KYC Deactivation Scam",
+    "category": "Banking / KYC Fraud",
+    "sender": "+1 (800) 555-0199",
+    "channel": "SMS",
+    "message": "Dear customer, your SBI bank account has been blocked due to incomplete KYC. Update KYC immediately at http://sbi-kyc-verify.xyz/login to avoid permanent deactivation.",
+    "expected": "Scam"
+  },
+  {
+    "id": "netflix_payment_fail",
+    "title": "Netflix Subscription Billing Phishing",
+    "category": "Phishing & Account Security",
+    "sender": "support@netflix-account-center.top",
+    "channel": "Email",
+    "message": "Netflix Support: We were unable to process your monthly subscription payment. Update your credit card info now: http://netflix-billing-update.top or service will stop.",
+    "expected": "Scam"
+  },
+  {
+    "id": "lottery_mega_win",
+    "title": "$1.5M International Lottery Winner",
+    "category": "Lottery & Prize Scam",
+    "sender": "claim@megawin-lottery.org",
+    "channel": "Email",
+    "message": "CONGRATULATIONS! Your mobile number won $1,500,000 in the 2026 International Mega Millions Lottery. To claim your prize, send your full name and bank info to claim@megawin-lottery.org",
+    "expected": "Scam"
+  },
+  {
+    "id": "crypto_elon_giveaway",
+    "title": "Crypto 500% Return Giveaway",
+    "category": "Crypto & Investment Fraud",
+    "sender": "+1 (917) 555-0144",
+    "channel": "SMS",
+    "message": "Elon Musk Giveaway: Send 0.1 BTC to receive 0.5 BTC back immediately! Guaranteed 500% profit. Join official event at http://elon-crypto-event.xyz",
+    "expected": "Scam"
+  },
+  {
+    "id": "usps_redelivery_fee",
+    "title": "USPS Missing Address & Fee Scam",
+    "category": "Delivery & Package Scam",
+    "sender": "USPS-Alerts",
+    "channel": "SMS",
+    "message": "USPS Alert: Your parcel could not be delivered on 08/19 due to missing street address. Please update your address and pay $1.99 redelivery fee at http://usps-redelivery-portal.info",
+    "expected": "Scam"
+  },
+  {
+    "id": "irs_arrest_threat",
+    "title": "IRS Federal Arrest Warrant Threat",
+    "category": "Threat & Impersonation Scam",
+    "sender": "+1 (888) 555-0133",
+    "channel": "SMS",
+    "message": "URGENT: This is Officer Miller from the Federal Tax Police. An arrest warrant has been issued in your name for tax fraud. Call +1-800-555-0188 immediately to avoid arrest.",
+    "expected": "Scam"
+  },
+  {
+    "id": "amazon_remote_job",
+    "title": "WhatsApp Part-Time Job $500/day",
+    "category": "Job & Task Scam",
+    "sender": "+1 (917) 555-0182",
+    "channel": "WhatsApp",
+    "message": "Hi! Amazon HR is hiring remote part-time workers! Earn $300 - $800 daily by simply rating products. No experience needed. Contact WhatsApp: +1-917-555-0144",
+    "expected": "Scam"
+  },
+  {
+    "id": "legit_google_2fa",
+    "title": "Legitimate Google 2FA Code",
+    "category": "Legitimate Message",
+    "sender": "Google",
+    "channel": "SMS",
+    "message": "Your one-time security passcode is 492019 for your Google verification. Do not share this code with anyone.",
+    "expected": "Legitimate"
+  },
+  {
+    "id": "legit_friend_chat",
+    "title": "Casual Lunch Chat with Friend",
+    "category": "Legitimate Message",
+    "sender": "Alex",
+    "channel": "SMS",
+    "message": "Hey! Are we still meeting for lunch at 12:30 PM at the Italian bistro near downtown?",
+    "expected": "Legitimate"
+  },
+  {
+    "id": "legit_order_shipped",
+    "title": "Genuine Order Delivery Notification",
+    "category": "Legitimate Message",
+    "sender": "Amazon Delivery",
+    "channel": "Email",
+    "message": "Your Amazon package with order #112-9847192 has been delivered to your front porch. View delivery photo in the app.",
+    "expected": "Legitimate"
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "model_type": "TF-IDF + Soft Voting Ensemble (Logistic Regression + Multinomial Naive Bayes)",
+  "trained_at": "2026-08-19T23:00:53.018040",
+  "total_samples": 1259,
+  "train_samples": 1007,
+  "test_samples": 252,
+  "vocabulary_size": 1031,
+  "metrics": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1_score": 1.0
+  },
+  "confusion_matrix": [
+    [
+      124,
+      0
+    ],
+    [
+      0,
+      128
+    ]
+  ],
+  "top_scam_keywords": [
+    "url",
+    "at url",
+    "phone",
+    "account",
+    "package",
+    "currency",
+    "at",
+    "or",
+    "alert",
+    "immediately",
+    "now",
+    "notice",
+    "confirm",
+    "update",
+    "earn",
+    "earn currency",
+    "here",
+    "daily",
+    "hours",
+    "of",
+    "your account",
+    "here url",
+    "call",
+    "cancel",
+    "won"
+  ],
+  "classes": [
+    "Legitimate",
+    "Scam"
+  ]
+}

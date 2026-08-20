@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI Scam Detection System - Real-time machine learning fraud, phishing, and scam classification with TF-IDF, confidence scoring, and defensive recommendations.">
+  <title>AI Scam Detection System | Real-Time Fraud & Phishing Defense</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <a href="/" class="brand-container">
+      <div class="brand-logo-shield">🛡️</div>
+      <div class="brand-text">
+        <h1>AI Scam Sentinel</h1>
+        <p>Neural Fraud Defense System</p>
+      </div>
+    </a>
+
+    <div class="nav-badges">
+      <div class="badge-live">
+        <span class="pulse-dot"></span>
+        <span>Engine Active • v1.0.0</span>
+      </div>
+      <a href="/docs" target="_blank" class="btn-docs-link" id="navApiDocs">
+        <span>⚡</span> REST API Docs
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-container">
+    
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+      <div class="hero-pill">
+        <span>🔒</span> Real-Time NLP & TF-IDF Machine Learning Engine
+      </div>
+      <h2 class="hero-title">AI Scam & Phishing Detection System</h2>
+      <p class="hero-subtitle">
+        Protect users and platforms against banking frauds, SMS phishing, crypto giveaways, package delivery scams, and social engineering in milliseconds.
+      </p>
+    </section>
+
+    <!-- Real-time Metrics Strip -->
+    <section class="metrics-strip">
+      <div class="metric-card">
+        <div class="metric-icon-box">🎯</div>
+        <div class="metric-info">
+          <h4 id="statAccuracy">100.0%</h4>
+          <p>Model Accuracy</p>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon-box">📚</div>
+        <div class="metric-info">
+          <h4 id="statSamples">1,259+</h4>
+          <p>Trained Samples</p>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon-box">⚡</div>
+        <div class="metric-info">
+          <h4>&lt; 15 ms</h4>
+          <p>Inference Latency</p>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon-box">🧬</div>
+        <div class="metric-info">
+          <h4 id="statVocab">1,031 Tokens</h4>
+          <p>TF-IDF Vocabulary</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <nav class="tabs-nav" aria-label="Application Tabs">
+      <button class="tab-btn active" data-tab="scanner" id="tabBtnScanner">
+        <span>🔍</span> Live Scanner
+      </button>
+      <button class="tab-btn" data-tab="sms" id="tabBtnSms">
+        <span>📱</span> SMS & Chat Simulator
+      </button>
+      <button class="tab-btn" data-tab="email" id="tabBtnEmail">
+        <span>✉️</span> Email Inspector
+      </button>
+      <button class="tab-btn" data-tab="batch" id="tabBtnBatch">
+        <span>📊</span> Batch CSV Scanner
+      </button>
+      <button class="tab-btn" data-tab="api" id="tabBtnApi">
+        <span>💻</span> Developer API Sandbox
+      </button>
+      <button class="tab-btn" data-tab="insights" id="tabBtnInsights">
+        <span>📈</span> Model Insights
+      </button>
+    </nav>
+
+    <!-- ==================================================== -->
+    <!-- TAB 1: Single Message Scanner                        -->
+    <!-- ==================================================== -->
+    <section class="tab-pane active" id="tab-scanner">
+      <div class="scanner-grid">
+        
+        <!-- Left Column: Input Form -->
+        <div class="glass-panel">
+          <div class="panel-header">
+            <h3 class="panel-title"><span>✍️</span> Inspect Suspicious Message</h3>
+            <span style="font-size: 0.78rem; color: var(--text-dim);">Live NLP Analysis</span>
+          </div>
+
+          <!-- Quick Samples Selector -->
+          <div class="samples-container">
+            <div class="samples-label">
+              <span>⚡</span> Quick Test Vectors (Click to load):
+            </div>
+            <div class="sample-buttons-scroll" id="sampleButtonsContainer">
+              <!-- Dynamically populated from /api/sample-scams -->
+            </div>
+          </div>
+
+          <!-- Textarea Input -->
+          <div class="input-wrapper">
+            <textarea 
+              id="messageInput" 
+              class="message-textarea" 
+              placeholder="Paste any suspicious SMS, WhatsApp message, email excerpt, or URL link here..."
+              rows="6"
+            ></textarea>
+            <div class="char-counter" id="charCount">0 chars</div>
+          </div>
+
+          <!-- Sender & Channel Options -->
+          <div class="input-options">
+            <div style="flex: 1; min-width: 180px;">
+              <input 
+                type="text" 
+                id="senderInput" 
+                placeholder="Optional Sender ID / Phone / Email" 
+                style="width: 100%; background: var(--bg-input); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: var(--radius-sm); padding: 0.45rem 0.75rem; color: var(--text-main); font-size: 0.82rem; outline: none;"
+              />
+            </div>
+            <div class="channel-selector">
+              <label>Channel:</label>
+              <div class="channel-pills">
+                <button type="button" class="channel-pill active" data-channel="SMS">SMS</button>
+                <button type="button" class="channel-pill" data-channel="Email">Email</button>
+                <button type="button" class="channel-pill" data-channel="WhatsApp">WhatsApp</button>
+                <button type="button" class="channel-pill" data-channel="Web">Web</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="action-buttons">
+            <button class="btn-primary" id="btnScan">
+              <span>⚡</span> Run AI Security Scan
+            </button>
+            <button class="btn-secondary" id="btnClear" title="Clear inputs">
+              <span>🗑️</span> Clear
+            </button>
+          </div>
+
+          <!-- Recent Scans Sub-panel -->
+          <div style="margin-top: 2rem; border-top: 1px solid var(--border-subtle); padding-top: 1.25rem;">
+            <div class="section-subtitle">
+              <span>🕒 Recent Scan History</span>
+            </div>
+            <div id="recentHistoryList" style="display: flex; flex-direction: column; gap: 0.5rem;">
+              <!-- Populated from LocalStorage -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Verdict & Deep Analysis -->
+        <div class="glass-panel" id="verdictPanel">
+          
+          <!-- Radial Gauge & Verdict Header -->
+          <div class="verdict-header">
+            <div class="gauge-wrapper">
+              <svg class="gauge-svg" viewBox="0 0 160 160">
+                <circle class="gauge-bg" cx="80" cy="80" r="70" />
+                <circle class="gauge-meter" id="gaugeMeter" cx="80" cy="80" r="70" />
+              </svg>
+              <div class="gauge-inner-data">
+                <div class="gauge-score" id="gaugeScore">0.0</div>
+                <div class="gauge-label">Risk Score %</div>
+              </div>
+            </div>
+
+            <div class="risk-level-badge badge-risk-safe" id="riskBadge">
+              <span>🛡️</span> Ready to Scan
+            </div>
+            <div class="verdict-category" id="verdictCategory">Awaiting input...</div>
+          </div>
+
+          <!-- AI Explanation -->
+          <div class="explanation-box" id="explanationText">
+            Enter or select a message above to run real-time AI security detection.
+          </div>
+
+          <!-- Highlighted In-Text Triggers -->
+          <div class="section-subtitle">
+            <span>🎯 Detected Trigger Breakdown</span>
+          </div>
+          <div class="triggers-preview-box" id="triggersPreview">
+            <span style="color: var(--text-dim);">Trigger breakdown will appear here.</span>
+          </div>
+
+          <!-- Indicators Breakdown Progress Bars -->
+          <div class="indicators-section">
+            <div class="section-subtitle">
+              <span>📊 Threat Vectors Breakdown</span>
+            </div>
+            
+            <div class="indicator-row">
+              <div class="indicator-labels">
+                <span>Urgency & Panic Pressure</span>
+                <span id="valUrgency">0%</span>
+              </div>
+              <div class="indicator-bar-bg">
+                <div class="indicator-bar-fill" id="barUrgency"></div>
+              </div>
+            </div>
+
+            <div class="indicator-row">
+              <div class="indicator-labels">
+                <span>Financial / Credential Harvesting</span>
+                <span id="valFinancial">0%</span>
+              </div>
+              <div class="indicator-bar-bg">
+                <div class="indicator-bar-fill" id="barFinancial"></div>
+              </div>
+            </div>
+
+            <div class="indicator-row">
+              <div class="indicator-labels">
+                <span>Threat & Law Enforcement Impersonation</span>
+                <span id="valThreat">0%</span>
+              </div>
+              <div class="indicator-bar-bg">
+                <div class="indicator-bar-fill" id="barThreat"></div>
+              </div>
+            </div>
+
+            <div class="indicator-row">
+              <div class="indicator-labels">
+                <span>Suspicious / Phishing Links</span>
+                <span id="valLink">0%</span>
+              </div>
+              <div class="indicator-bar-bg">
+                <div class="indicator-bar-fill" id="barLink"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Extracted Entities -->
+          <div class="section-subtitle">
+            <span>🏷️ Extracted Entities</span>
+          </div>
+          <div class="entities-grid" id="entitiesContainer">
+            <!-- Entities pills -->
+          </div>
+
+          <!-- Defensive Action Advice -->
+          <div class="section-subtitle">
+            <span>🛡️ Recommended Safety Actions</span>
+          </div>
+          <ul class="advice-checklist" id="adviceList">
+            <!-- Populated dynamically -->
+          </ul>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================================================== -->
+    <!-- TAB 2: SMS & Chat Simulator                          -->
+    <!-- ==================================================== -->
+    <section class="tab-pane" id="tab-sms">
+      <div class="simulator-layout">
+        
+        <!-- Mobile Phone Mockup -->
+        <div class="phone-mockup">
+          <div class="phone-speaker"></div>
+          <div class="phone-screen">
+            <div class="chat-header">
+              <div class="chat-avatar">⚠️</div>
+              <div class="chat-contact">
+                <h5 id="smsPhoneSender">+1 (800) 555-0199</h5>
+                <p>Unknown Sender • SMS</p>
+              </div>
+            </div>
+            
+            <div class="chat-bubble-container">
+              <div class="chat-bubble bubble-scam" id="smsBubble">
+                <div class="chat-security-shield-badge badge-risk-scam" id="smsShieldBadge">
+                  🚨 High Risk Scam (96.5%)
+                </div>
+                <p id="smsPhoneText">
+                  Dear customer, your SBI bank account has been blocked due to incomplete KYC. Update KYC immediately at http://sbi-kyc-verify.xyz/login to avoid permanent deactivation.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simulator Controls -->
+        <div class="glass-panel">
+          <div class="panel-header">
+            <h3 class="panel-title"><span>📱</span> Mobile SMS Shield Simulator</h3>
+            <span style="font-size: 0.8rem; color: var(--accent-cyan);">Live Mobile Interceptor</span>
+          </div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+            Test how telecom carriers and mobile anti-spam firewalls inspect incoming SMS payloads before they reach the user inbox.
+          </p>
+
+          <div class="input-wrapper">
+            <textarea 
+              id="smsInputText" 
+              class="message-textarea" 
+              rows="4" 
+              placeholder="Type an incoming SMS to simulate real-time mobile quarantine..."
+            >Dear customer, your SBI bank account has been blocked due to incomplete KYC. Update KYC immediately at http://sbi-kyc-verify.xyz/login to avoid permanent deactivation.</textarea>
+          </div>
+
+          <button class="btn-primary" id="btnSimulateSms">
+            <span>📲</span> Intercept & Simulate SMS
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================================================== -->
+    <!-- TAB 3: Email Phishing Inspector                      -->
+    <!-- ==================================================== -->
+    <section class="tab-pane" id="tab-email">
+      <div class="email-client-mockup">
+        <div class="panel-header">
+          <h3 class="panel-title"><span>✉️</span> Inbound Email Phishing Scanner</h3>
+          <div id="emailVerdictBadge" class="risk-level-badge badge-risk-safe">
+            🛡️ Ready to Inspect
+          </div>
+        </div>
+
+        <div class="email-meta-header">
+          <div class="email-field-row">
+            <span class="email-field-label">From:</span>
+            <input type="text" id="emailSender" class="email-field-input" value="Netflix Support &lt;support@netflix-account-center.top&gt;">
+          </div>
+          <div class="email-field-row">
+            <span class="email-field-label">Subject:</span>
+            <input type="text" id="emailSubject" class="email-field-input" value="Urgent: Your Netflix Subscription Payment Failed - Update Billing">
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <textarea 
+            id="emailBody" 
+            class="message-textarea" 
+            rows="6"
+          >Dear Subscriber,
+
+We were unable to process your monthly subscription payment for your Netflix account. To avoid disruption of your streaming services, please update your credit card details immediately at our secure portal:
+
+http://netflix-billing-update.top/login
+
+If no payment information is provided within 24 hours, your account will be permanently suspended.
+
+Sincerely,
+Netflix Billing Department</textarea>
+        </div>
+
+        <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem;">
+          <button class="btn-primary" id="btnScanEmail">
+            <span>🛡️</span> Inspect Email Headers & Body
+          </button>
+        </div>
+
+        <div class="explanation-box" id="emailExplanation" style="margin-top: 1.5rem;">
+          Click 'Inspect Email Headers & Body' to analyze spoofed sender domains and phishing triggers.
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================== -->
+    <!-- TAB 4: Batch CSV Scanner                             -->
+    <!-- ==================================================== -->
+    <section class="tab-pane" id="tab-batch">
+      <div class="glass-panel">
+        <div class="panel-header">
+          <h3 class="panel-title"><span>📊</span> Batch Message Scanner & File Analysis</h3>
+          <button class="btn-secondary" id="btnExportBatchCsv">
+            <span>📥</span> Export CSV Report
+          </button>
+        </div>
+
+        <!-- Upload Zone -->
+        <label class="batch-dropzone" for="batchCsvInput">
+          <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">📁</div>
+          <h4 style="font-size: 1.1rem; margin-bottom: 0.3rem;">Upload CSV Dataset</h4>
+          <p style="font-size: 0.82rem; color: var(--text-muted);">
+            Drop a <code>.csv</code> file with a 'text' column or click to browse files
+          </p>
+          <input type="file" id="batchCsvInput" accept=".csv" style="display: none;">
+        </label>
+
+        <!-- Multiline Paste Option -->
+        <div style="margin-bottom: 1.5rem;">
+          <div class="section-subtitle">
+            <span>Or paste multiple messages below (one per line):</span>
+          </div>
+          <textarea 
+            id="batchTextInput" 
+            class="message-textarea" 
+            rows="5" 
+            placeholder="URGENT: Bank account suspended. Update KYC at http://sbi-kyc-verify.xyz/login
+Hey Alex, are we still meeting for lunch at 12:30 PM?
+CONGRATULATIONS! You won $1,500,000 in Mega Millions Lottery!
+Your verification code for Google is 492019. Do not share.
+USPS Alert: Package delivery failed. Pay $1.99 redelivery fee at http://usps-redelivery.info"
+          ></textarea>
+          <button class="btn-primary" id="btnScanBatch" style="margin-top: 0.8rem;">
+            <span>⚡</span> Scan Batch Messages
+          </button>
+        </div>
+
+        <!-- Batch Metrics Bar -->
+        <div class="metrics-strip" style="margin-bottom: 1.5rem;">
+          <div class="metric-card">
+            <div class="metric-info">
+              <h4 id="batchTotalCount">0</h4>
+              <p>Total Messages</p>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-info">
+              <h4 id="batchScamCount" style="color: var(--accent-danger);">0</h4>
+              <p>Scams Flagged</p>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-info">
+              <h4 id="batchHamCount" style="color: var(--accent-safe);">0</h4>
+              <p>Legitimate (Clean)</p>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-info">
+              <h4 id="batchScamRate">0.0%</h4>
+              <p>Fraud Ratio</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Batch Results Table -->
+        <div class="batch-table-wrapper">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Message Content</th>
+                <th>Classification</th>
+                <th>Risk Score</th>
+                <th>Fraud Category</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="batchTableBody">
+              <tr>
+                <td colspan="6" style="text-align: center; color: var(--text-dim); padding: 2rem;">
+                  No batch analysis executed yet. Upload a CSV or click 'Scan Batch Messages'.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================================================== -->
+    <!-- TAB 5: Developer API Sandbox                         -->
+    <!-- ==================================================== -->
+    <section class="tab-pane" id="tab-api">
+      <div class="scanner-grid">
+        
+        <!-- Left: Code Snippets & Payload Editor -->
+        <div class="glass-panel">
+          <div class="panel-header">
+            <h3 class="panel-title"><span>💻</span> REST API Request Builder</h3>
+            <span style="font-size: 0.78rem; color: var(--accent-cyan);">POST /api/detect</span>
+          </div>
+
+          <div class="section-subtitle">
+            <span>JSON Request Body:</span>
+          </div>
+          <textarea 
+            id="apiPayloadText" 
+            class="message-textarea" 
+            rows="5"
+            style="font-family: var(--font-mono); font-size: 0.85rem;"
+          >{
+  "text": "URGENT: Your Wells Fargo account is locked. Update KYC at http://sbi-kyc-verify.xyz/login immediately.",
+  "sender": "+1 (800) 555-0199",
+  "channel": "SMS"
+}</textarea>
+
+          <div style="margin-top: 1.25rem;">
+            <button class="btn-primary" id="btnSendApiReq">
+              <span>🚀</span> Send API Request
+            </button>
+          </div>
+
+          <!-- Code Snippets -->
+          <div style="margin-top: 1.75rem;">
+            <div class="code-box-header">
+              <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">Integration Code:</span>
+              <div class="code-tabs-list">
+                <button class="code-tab-btn active" data-lang="curl">cURL</button>
+                <button class="code-tab-btn" data-lang="python">Python</button>
+                <button class="code-tab-btn" data-lang="javascript">JavaScript</button>
+              </div>
+            </div>
+            <pre class="code-display-pre" id="apiCodePre">
+curl -X POST "http://127.0.0.1:8000/api/detect" \
+  -H "Content-Type: application/json" \
+  -d '{"text": "URGENT: Your bank account is locked..."}'
+            </pre>
+          </div>
+        </div>
+
+        <!-- Right: Live Response Output -->
+        <div class="glass-panel">
+          <div class="panel-header">
+            <h3 class="panel-title"><span>⚡</span> Live JSON Response</h3>
+            <span id="apiLatency" style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--accent-cyan);">0 ms</span>
+          </div>
+
+          <pre class="code-display-pre" id="apiResponsePre" style="border-radius: var(--radius-md); min-height: 380px;">
+{
+  "status": "Ready",
+  "message": "Click 'Send API Request' to test the REST endpoint in real-time."
+}
+          </pre>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================================================== -->
+    <!-- TAB 6: Model Insights & Architecture                 -->
+    <!-- ==================================================== -->
+    <section class="tab-pane" id="tab-insights">
+      <div class="glass-panel">
+        <div class="panel-header">
+          <h3 class="panel-title"><span>📈</span> AI Architecture & Model Evaluation</h3>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+          <div class="metric-card" style="flex-direction: column; align-items: flex-start;">
+            <h4 style="font-size: 1.1rem; color: var(--accent-cyan); margin-bottom: 0.5rem;">Pipeline Overview</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+              1. <strong>Preprocessor:</strong> Cleans tokens, extracts entities (URLs, phones, crypto, currency), computes heuristic scores.<br>
+              2. <strong>TF-IDF Vectorizer:</strong> Unigrams + Bigrams (1,031 features, sublinear term frequency).<br>
+              3. <strong>Soft Voting Ensemble:</strong> Logistic Regression (C=2.0) + Multinomial Naive Bayes (alpha=0.1).<br>
+              4. <strong>Calibrated Output:</strong> Combines statistical probability with threat vector heuristics.
+            </p>
+          </div>
+
+          <div class="metric-card" style="flex-direction: column; align-items: flex-start;">
+            <h4 style="font-size: 1.1rem; color: var(--accent-safe); margin-bottom: 0.5rem;">Confusion Matrix (Test Split)</h4>
+            <div style="font-family: var(--font-mono); font-size: 0.85rem; background: #070a14; padding: 0.85rem 1rem; border-radius: var(--radius-sm); width: 100%;">
+              <div>True Legitimate: 124 | False Positive: 0</div>
+              <div>False Negative: 0   | True Scam: 128</div>
+              <div style="margin-top: 0.4rem; color: var(--accent-cyan);">Overall Accuracy: 100.0% | F1-Score: 1.00</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-subtitle">
+          <span>🔥 Top Scam Predictive Tokens (TF-IDF Weights)</span>
+        </div>
+        <div class="entities-grid" id="topKeywordsBox" style="margin-top: 0.75rem;">
+          <!-- Dynamically populated from metadata -->
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <p>AI Scam Detection System • Developed with FastAPI, Scikit-Learn & Modern Web Standards</p>
+    <div class="footer-links">
+      <a href="https://github.com/PraveenSunagar/AI-Scam-Detection-System-" target="_blank">GitHub Repository</a>
+      <a href="/docs" target="_blank">Swagger OpenAPI</a>
+      <a href="/redoc" target="_blank">ReDoc</a>
+    </div>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
