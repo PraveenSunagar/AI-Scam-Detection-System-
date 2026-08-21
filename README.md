@@ -11,7 +11,6 @@ An intelligent, real-time **AI Scam & Phishing Detection System** built to ident
 Built with a hybrid **TF-IDF + Soft Voting Machine Learning Ensemble** (Logistic Regression & Multinomial Naive Bayes), a high-performance **FastAPI REST backend**, and a modern **cybersecurity glassmorphism web dashboard**.
 
 ---
-
 ## 🚀 Key Features
 
 - **⚡ Real-Time Scam & Phishing Detection**: Instant classification with sub-15ms inference latency.
