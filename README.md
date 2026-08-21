@@ -48,7 +48,7 @@ flowchart TD
 
 ## 🛠️ Tech Stack
 
-- **Backend**: Python 3.10+, FastAPI, Uvicorn, Pydantic
+- **Backend**: Python, FastAPI, Uvicorn, Pydantic
 - **Machine Learning & NLP**: Scikit-Learn (TF-IDF Vectorizer, Logistic Regression, MultinomialNB, VotingClassifier), NumPy, Pandas
 - **Frontend**: HTML5, Vanilla CSS3 (Glassmorphism & Cyber Theme), JavaScript ES6+ (Fetch API, SVG Gauge Animations)
 - **Serialization**: Joblib, JSON
